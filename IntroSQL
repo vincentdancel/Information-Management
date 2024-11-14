@@ -1,0 +1,37 @@
+package util; 
+
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class MySQLConnect {
+
+    private static Connection databaseConnection = null;
+    
+    public static Connection getConnection() {
+        if (databaseConnection == null) {
+            try {                
+                databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/intro_schema", "root", "root");
+                System.out.println("Connected to database");                
+            } catch (SQLException ex) {
+                Logger.getLogger(MySQLConnect.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return databaseConnection;
+    }
+}
+
+-------------------------------------------------------------------------------------------
+
+package view;
+
+import util.MySQLConnect;
+
+public class ProductAppUI extends javax.swing.JFrame {
+
+ 
+    public ProductAppUI() {
+        initComponents();
+        MySQLConnect.getConnection();
+    }
+
